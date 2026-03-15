@@ -49,8 +49,8 @@ export async function analyzeProductImage(
 ・「ご覧いただきありがとうございます」から始める
 ・商品の魅力を凝縮した紹介文
 ・コーディネートやシーン提案
-・カラー情報
-・サイズは「平置き」と記載
+
+※注意：カラー情報・サイズ情報は含めないでください（別途追加します）
 
 JSONのみを返してください。`
 
@@ -102,10 +102,16 @@ JSONのみを返してください。`
 
     const result: GeminiResponse = JSON.parse(jsonText)
 
-    // Combine description with header and footer
+    // Combine description with header, color/size info, and footer
     const fullDescription = `${headerTemplate}
 
 ${result.description}
+
+〇カラー〇
+${result.color}
+
+〇サイズ〇
+平置き
 
 ${footerTemplate}
 
