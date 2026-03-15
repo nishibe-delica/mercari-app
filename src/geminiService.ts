@@ -2,12 +2,10 @@ const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
 
 interface GeminiResponse {
-  productInfo: {
-    productType: string
-    color: string
-    features: string
-    target: string
-  }
+  productType: string
+  color: string
+  features: string
+  target: string
   titles: string[]
   description: string
 }
@@ -19,61 +17,42 @@ export async function analyzeProductImage(
   headerTemplate: string,
   footerTemplate: string,
   closingStatement: string
-): Promise<GeminiResponse> {
+): Promise<{ productInfo: any; titles: string[]; description: string }> {
   try {
     // Convert image to base64
     const base64Image = await fileToBase64(imageFile)
     const imageData = base64Image.split(',')[1] // Remove data:image/...;base64, prefix
 
-    const prompt = `あなたはメルカリ出品のプロです。この商品画像を分析して、以下の情報を日本語で生成してください。
-
-商品番号: ${productNumber}
-説明文の目標文字数: ${charCount}文字
-
-以下の形式のJSONで返してください：
+    const prompt = `あなたはメルカリ出品のプロです。
+以下の商品画像を分析し、JSON形式で出力してください。
 
 {
-  "productInfo": {
-    "productType": "商品の種類（例: ニット帽、マフラー、ワンピース）",
-    "color": "色（例: ホワイト、ベージュ、ブラック）",
-    "features": "特徴（例: くま耳、小顔効果、オーバーサイズ）",
-    "target": "ターゲット・シーン（例: 通勤、ディズニー、20代女性）"
-  },
+  "productType": "商品の種類（例：ニット帽、マフラー）",
+  "color": "色（例：ホワイト、白）",
+  "features": "特徴（例：くま耳、ふわもこ、防寒）",
+  "target": "ターゲット・シーン（例：冬、通勤、ディズニー）",
   "titles": [
-    "タイトル案1（40文字以内、キーワードを詰め込む）",
-    "タイトル案2（40文字以内、異なる切り口で）",
-    "タイトル案3（40文字以内、さらに別の表現で）"
+    "タイトル候補1（40文字以内）",
+    "タイトル候補2（40文字以内）",
+    "タイトル候補3（40文字以内）"
   ],
-  "description": "商品説明文（${charCount}文字程度）"
+  "description": "商品説明文（ヘッダー・フッターなしの本文のみ、${charCount}文字程度）"
 }
 
-説明文は以下の構成で生成してください：
+【説明文のルール】
+・自然な日本語で、AIが書いたと思わせない
+・キーワードを自然に散りばめる
+・3ブロック構造：商品の魅力 → コーデ提案 → おすすめポイント
+・絵文字は♪と◎のみ控えめに使用
 
-【ヘッダー部分】
-${headerTemplate}
+商品説明文は以下の要素を含めてください：
+・「ご覧いただきありがとうございます」から始める
+・商品の魅力を凝縮した紹介文
+・コーディネートやシーン提案
+・カラー情報
+・サイズは「平置き」と記載
 
-【商品紹介文】（150〜200文字）
-- 商品の魅力を凝縮
-- 「ご覧いただきありがとうございます✿」から始める
-
-【コーデ・シーン提案】
-- 自然にキーワードを散りばめる
-- ターゲット層に響く表現
-
-【カラー・サイズ情報】
-カラー: [色]
-サイズ: 平置き
-
-【フッター部分】
-${footerTemplate}
-
-【締めの一文】
-${closingStatement}
-
-【商品番号】
-#${productNumber}
-
-※大人っぽく、可愛すぎない雰囲気で書いてください。`
+JSONのみを返してください。`
 
     const requestBody = {
       contents: [
@@ -106,6 +85,8 @@ ${closingStatement}
     })
 
     if (!response.ok) {
+      const errorData = await response.json()
+      console.error('Gemini API error:', errorData)
       throw new Error(`Gemini API error: ${response.status}`)
     }
 
@@ -113,15 +94,35 @@ ${closingStatement}
     const textContent = data.candidates[0].content.parts[0].text
 
     // Extract JSON from the response (may be wrapped in ```json ... ```)
-    const jsonMatch = textContent.match(/```json\n([\s\S]*?)\n```/) || textContent.match(/\{[\s\S]*\}/)
-    if (!jsonMatch) {
-      throw new Error('Failed to parse JSON from Gemini response')
+    let jsonText = textContent.trim()
+    const jsonMatch = textContent.match(/```json\s*([\s\S]*?)\s*```/) || textContent.match(/\{[\s\S]*\}/)
+    if (jsonMatch) {
+      jsonText = jsonMatch[1] || jsonMatch[0]
     }
 
-    const jsonText = jsonMatch[1] || jsonMatch[0]
-    const result = JSON.parse(jsonText)
+    const result: GeminiResponse = JSON.parse(jsonText)
 
-    return result
+    // Combine description with header and footer
+    const fullDescription = `${headerTemplate}
+
+${result.description}
+
+${footerTemplate}
+
+${closingStatement}
+
+#${productNumber}`
+
+    return {
+      productInfo: {
+        productType: result.productType,
+        color: result.color,
+        features: result.features,
+        target: result.target,
+      },
+      titles: result.titles,
+      description: fullDescription
+    }
   } catch (error) {
     console.error('Gemini API error:', error)
     throw error
