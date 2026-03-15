@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useMercariStore } from '../store'
 import Button from './Button'
-import { ArrowLeft, FileSearch } from 'lucide-react'
+import { ArrowLeft, RefreshCw } from 'lucide-react'
 
 export default function RestoreScreen() {
   const { setFormData, setCurrentScreen } = useMercariStore()
@@ -34,8 +34,8 @@ export default function RestoreScreen() {
         }
       })
 
-      if (!data.productNumber || !data.category || !data.productType || !data.color) {
-        setError('必須項目が不足しています。商品番号、カテゴリ、商品種類、カラーを含めてください。')
+      if (!data.productNumber && !data.color && !data.features) {
+        setError('読み取れる情報が見つかりませんでした。商品番号、カラー、特徴などを含めてください。')
         return
       }
 
@@ -61,45 +61,38 @@ export default function RestoreScreen() {
           <h2 className="text-2xl font-bold text-heading-gray">既存から復元</h2>
         </div>
 
-        {/* 説明カード */}
-        <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8 mb-6">
-          <div className="mb-6">
-            <h3 className="text-lg font-bold text-heading-gray mb-3">使い方</h3>
-            <p className="text-text-gray leading-relaxed mb-2">
-              Googleドキュメントなどからコピーした内容を貼り付けてください。
-            </p>
-            <p className="text-sm text-text-gray/60">
-              ※「商品番号:」「カテゴリ:」「商品種類:」「カラー:」などの形式で記載されている必要があります
-            </p>
-          </div>
+        {/* メインカード */}
+        <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8">
+          <h3 className="text-lg font-bold text-heading-gray mb-6 flex items-center gap-2">
+            📋 Googleドキュメントの内容を貼り付けてください
+          </h3>
 
           <textarea
             value={pastedText}
             onChange={(e) => setPastedText(e.target.value)}
-            className="w-full h-96 px-4 py-4 text-base border-2 border-gray-200 rounded-xl focus:outline-none focus:border-dusty-pink focus:ring-2 focus:ring-dusty-pink/20 transition-all bg-warm-white resize-none font-mono text-sm text-text-gray"
-            placeholder="ここにGoogleドキュメントの内容を貼り付けてください
-
-例:
-商品番号: A12345
-カテゴリ: レディース
-商品種類: ワンピース
-カラー: ベージュ
-特徴: フリル付き
-ターゲット: 20代女性"
+            className="w-full h-64 px-4 py-4 text-base border-2 border-gray-200 rounded-xl focus:outline-none focus:border-dusty-pink focus:ring-2 focus:ring-dusty-pink/20 transition-all bg-warm-white resize-none text-text-gray mb-6"
+            placeholder="ここに説明文をペーストしてください"
           />
 
+          <div className="bg-warm-white rounded-xl p-4 mb-6 border-2 border-gray-200">
+            <p className="text-sm text-text-gray font-medium mb-2">💡 以下の形式で読み取ります：</p>
+            <ul className="text-sm text-text-gray space-y-1 ml-4">
+              <li>・商品番号</li>
+              <li>・カラー</li>
+              <li>・商品の特徴</li>
+            </ul>
+          </div>
+
           {error && (
-            <div className="mt-4 p-4 bg-red-50 border-2 border-red-200 rounded-xl">
+            <div className="mb-6 p-4 bg-red-50 border-2 border-red-200 rounded-xl">
               <p className="text-sm text-red-600 font-medium">{error}</p>
             </div>
           )}
 
-          <div className="mt-6">
-            <Button onClick={handleRestore}>
-              <FileSearch size={24} />
-              <span>内容を読み取る</span>
-            </Button>
-          </div>
+          <Button onClick={handleRestore}>
+            <RefreshCw size={24} />
+            <span>🔄 内容を読み取る</span>
+          </Button>
         </div>
       </div>
     </div>
