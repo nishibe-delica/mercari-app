@@ -54,8 +54,16 @@ export default function InputScreen() {
     setError(null)
 
     try {
+      // Convert file to base64
+      const reader = new FileReader()
+      const base64Promise = new Promise<string>((resolve) => {
+        reader.onloadend = () => resolve(reader.result as string)
+        reader.readAsDataURL(formData.imageFile!)
+      })
+      const imageBase64 = await base64Promise
+
       const result = await analyzeProductImage(
-        formData.imageFile,
+        imageBase64,
         formData.productNumber,
         formData.charCount,
         settings.headerTemplate,
