@@ -35,61 +35,42 @@ export default function InputScreen() {
           {/* 商品番号 */}
           <div>
             <label className={labelClass}>
-              商品番号 <span className="text-dusty-pink">*</span>
+              商品番号
             </label>
             <input
               type="text"
               value={formData.productNumber}
               onChange={(e) => setFormData({ productNumber: e.target.value })}
               className={inputClass}
-              placeholder="例: A12345"
+              placeholder="例: 1568"
             />
-          </div>
-
-          {/* カテゴリ */}
-          <div>
-            <label className={labelClass}>
-              カテゴリ <span className="text-dusty-pink">*</span>
-            </label>
-            <select
-              value={formData.category}
-              onChange={(e) => setFormData({ category: e.target.value })}
-              className={inputClass}
-            >
-              <option value="">選択してください</option>
-              <option value="レディース">レディース</option>
-              <option value="メンズ">メンズ</option>
-              <option value="キッズ">キッズ</option>
-              <option value="インテリア">インテリア</option>
-              <option value="雑貨">雑貨</option>
-            </select>
           </div>
 
           {/* 商品種類 */}
           <div>
             <label className={labelClass}>
-              商品種類 <span className="text-dusty-pink">*</span>
+              商品種類
             </label>
             <input
               type="text"
               value={formData.productType}
               onChange={(e) => setFormData({ productType: e.target.value })}
               className={inputClass}
-              placeholder="例: ワンピース、Tシャツ、クッション"
+              placeholder="例: ニット帽、マフラー、ワンピース"
             />
           </div>
 
           {/* カラー */}
           <div>
             <label className={labelClass}>
-              カラー <span className="text-dusty-pink">*</span>
+              カラー
             </label>
             <input
               type="text"
               value={formData.color}
               onChange={(e) => setFormData({ color: e.target.value })}
               className={inputClass}
-              placeholder="例: ベージュ、ホワイト、ブラック"
+              placeholder="例: ホワイト、白、ベージュ"
             />
           </div>
 
@@ -103,21 +84,21 @@ export default function InputScreen() {
               value={formData.features}
               onChange={(e) => setFormData({ features: e.target.value })}
               className={inputClass}
-              placeholder="例: フリル、ロング丈、コットン100%"
+              placeholder="例: くま耳、小顔効果、オーバーサイズ"
             />
           </div>
 
-          {/* ターゲット */}
+          {/* ターゲット・シーン */}
           <div>
             <label className={labelClass}>
-              ターゲット
+              ターゲット・シーン
             </label>
             <input
               type="text"
               value={formData.target}
               onChange={(e) => setFormData({ target: e.target.value })}
               className={inputClass}
-              placeholder="例: 20代〜30代の女性、カジュアル好きな方"
+              placeholder="例: 通勤、ディズニー、20代女性"
             />
           </div>
 
@@ -147,7 +128,7 @@ export default function InputScreen() {
               value={formData.additionalInstructions}
               onChange={(e) => setFormData({ additionalInstructions: e.target.value })}
               className={`${inputClass} h-32 resize-none`}
-              placeholder="特に強調したいポイントや注意点があれば記入してください"
+              placeholder="例: 大人っぽく、可愛すぎない感じで"
             />
           </div>
 

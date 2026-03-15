@@ -49,7 +49,7 @@ const defaultFormData: FormData = {
   color: '',
   features: '',
   target: '',
-  charCount: 700,
+  charCount: 800,
   additionalInstructions: '',
 }
 
