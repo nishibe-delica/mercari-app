@@ -10,6 +10,7 @@ export interface FormData {
   target: string
   charCount: number
   additionalInstructions: string
+  imageFile: File | null
 }
 
 export interface Settings {
@@ -51,6 +52,7 @@ const defaultFormData: FormData = {
   target: '',
   charCount: 800,
   additionalInstructions: '',
+  imageFile: null,
 }
 
 const defaultSettings: Settings = {
