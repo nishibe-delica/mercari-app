@@ -15,23 +15,23 @@ export default function SettingsScreen() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-beige-50 via-white to-dusty-pink/10 p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-beige-50 via-white to-dusty-pink/10 px-4 py-6 sm:p-8">
+      <div className="max-w-[640px] mx-auto">
+        <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
           <button
             onClick={() => setCurrentScreen('home')}
             className="text-gray-600 hover:text-gray-800 transition-colors"
           >
-            <ArrowLeft size={24} />
+            <ArrowLeft size={20} className="sm:w-6 sm:h-6" />
           </button>
-          <h2 className="text-3xl font-light text-gray-800">設定</h2>
+          <h2 className="text-2xl sm:text-3xl font-light text-gray-800">設定</h2>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* ヘッダーテンプレート */}
-          <div className="bg-white rounded-3xl shadow-lg p-8">
-            <h3 className="text-xl font-medium text-gray-800 mb-4">ヘッダーテンプレート</h3>
-            <p className="text-sm text-gray-500 mb-4">
+          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-8">
+            <h3 className="text-base sm:text-xl font-medium text-gray-800 mb-3 sm:mb-4">ヘッダーテンプレート</h3>
+            <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
               説明文の冒頭に表示される内容です
             </p>
             <textarea
@@ -39,21 +39,21 @@ export default function SettingsScreen() {
               onChange={(e) =>
                 setLocalSettings({ ...localSettings, headerTemplate: e.target.value })
               }
-              className="w-full h-48 px-4 py-3 border border-beige-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink resize-none font-mono text-sm"
+              className="w-full h-40 sm:h-48 px-3 py-2 sm:px-4 sm:py-3 border border-beige-300 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink resize-none font-mono text-xs sm:text-sm"
             />
             <button
               onClick={() => handleSave('headerTemplate')}
-              className="mt-4 flex items-center gap-2 px-6 py-2 bg-dusty-pink text-white rounded-lg hover:bg-dusty-rose transition-colors"
+              className="mt-3 sm:mt-4 flex items-center gap-2 px-4 py-2 sm:px-6 bg-dusty-pink text-white rounded-lg hover:bg-dusty-rose transition-colors text-sm sm:text-base"
             >
-              <Save size={18} />
+              <Save size={16} className="sm:w-[18px] sm:h-[18px]" />
               {saveSuccess === 'headerTemplate' ? '保存しました!' : '保存'}
             </button>
           </div>
 
           {/* フッターテンプレート */}
-          <div className="bg-white rounded-3xl shadow-lg p-8">
-            <h3 className="text-xl font-medium text-gray-800 mb-4">フッターテンプレート</h3>
-            <p className="text-sm text-gray-500 mb-4">
+          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-8">
+            <h3 className="text-base sm:text-xl font-medium text-gray-800 mb-3 sm:mb-4">フッターテンプレート</h3>
+            <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
               説明文の末尾に表示される内容です（注意事項など）
             </p>
             <textarea
@@ -61,21 +61,21 @@ export default function SettingsScreen() {
               onChange={(e) =>
                 setLocalSettings({ ...localSettings, footerTemplate: e.target.value })
               }
-              className="w-full h-64 px-4 py-3 border border-beige-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink resize-none font-mono text-sm"
+              className="w-full h-56 sm:h-64 px-3 py-2 sm:px-4 sm:py-3 border border-beige-300 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink resize-none font-mono text-xs sm:text-sm"
             />
             <button
               onClick={() => handleSave('footerTemplate')}
-              className="mt-4 flex items-center gap-2 px-6 py-2 bg-dusty-pink text-white rounded-lg hover:bg-dusty-rose transition-colors"
+              className="mt-3 sm:mt-4 flex items-center gap-2 px-4 py-2 sm:px-6 bg-dusty-pink text-white rounded-lg hover:bg-dusty-rose transition-colors text-sm sm:text-base"
             >
-              <Save size={18} />
+              <Save size={16} className="sm:w-[18px] sm:h-[18px]" />
               {saveSuccess === 'footerTemplate' ? '保存しました!' : '保存'}
             </button>
           </div>
 
           {/* 締めの一文 */}
-          <div className="bg-white rounded-3xl shadow-lg p-8">
-            <h3 className="text-xl font-medium text-gray-800 mb-4">締めの一文</h3>
-            <p className="text-sm text-gray-500 mb-4">
+          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-8">
+            <h3 className="text-base sm:text-xl font-medium text-gray-800 mb-3 sm:mb-4">締めの一文</h3>
+            <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
               フッターの後、商品番号の前に表示される一文です
             </p>
             <textarea
@@ -83,19 +83,19 @@ export default function SettingsScreen() {
               onChange={(e) =>
                 setLocalSettings({ ...localSettings, closingStatement: e.target.value })
               }
-              className="w-full h-24 px-4 py-3 border border-beige-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink resize-none"
+              className="w-full h-20 sm:h-24 px-3 py-2 sm:px-4 sm:py-3 border border-beige-300 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink resize-none text-sm sm:text-base"
             />
             <button
               onClick={() => handleSave('closingStatement')}
-              className="mt-4 flex items-center gap-2 px-6 py-2 bg-dusty-pink text-white rounded-lg hover:bg-dusty-rose transition-colors"
+              className="mt-3 sm:mt-4 flex items-center gap-2 px-4 py-2 sm:px-6 bg-dusty-pink text-white rounded-lg hover:bg-dusty-rose transition-colors text-sm sm:text-base"
             >
-              <Save size={18} />
+              <Save size={16} className="sm:w-[18px] sm:h-[18px]" />
               {saveSuccess === 'closingStatement' ? '保存しました!' : '保存'}
             </button>
           </div>
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-6 sm:mt-8 text-center">
           <Button
             onClick={() => setCurrentScreen('home')}
             variant="secondary"

@@ -7,7 +7,7 @@ interface ButtonProps {
 }
 
 export default function Button({ children, onClick, variant = 'primary', className = '', type = 'button' }: ButtonProps) {
-  const baseClasses = 'px-8 py-4 rounded-2xl font-medium transition-all duration-200 shadow-md hover:shadow-lg'
+  const baseClasses = 'px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl font-medium transition-all duration-200 shadow-md hover:shadow-lg text-sm sm:text-base'
 
   const variantClasses = {
     primary: 'bg-gradient-to-r from-dusty-pink to-dusty-rose text-white hover:from-dusty-rose hover:to-dusty-pink',
