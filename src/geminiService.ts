@@ -19,9 +19,14 @@ export async function analyzeProductImage(
   closingStatement: string
 ): Promise<{ productInfo: any; titles: string[]; description: string }> {
   try {
+    console.log('🔍 Starting API call...')
+    console.log('API Key exists:', !!GEMINI_API_KEY)
+    console.log('API Key prefix:', GEMINI_API_KEY?.substring(0, 10))
+
     // Convert image to base64
     const base64Image = await fileToBase64(imageFile)
     const imageData = base64Image.split(',')[1] // Remove data:image/...;base64, prefix
+    console.log('✅ Image converted to base64')
 
     const prompt = `あなたはメルカリ出品のプロです。
 以下の商品画像を分析し、JSON形式で出力してください。
@@ -76,6 +81,7 @@ JSONのみを返してください。`
       }
     }
 
+    console.log('📡 Sending request to Gemini API...')
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
@@ -84,10 +90,12 @@ JSONのみを返してください。`
       body: JSON.stringify(requestBody)
     })
 
+    console.log('📥 Response status:', response.status)
+
     if (!response.ok) {
       const errorData = await response.json()
-      console.error('Gemini API error:', errorData)
-      throw new Error(`Gemini API error: ${response.status}`)
+      console.error('❌ Gemini API error:', errorData)
+      throw new Error(`Gemini API error: ${response.status} - ${JSON.stringify(errorData)}`)
     }
 
     const data = await response.json()
