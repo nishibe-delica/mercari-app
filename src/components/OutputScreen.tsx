@@ -30,91 +30,93 @@ export default function OutputScreen() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-beige-50 via-white to-dusty-pink/10 px-4 py-6 sm:p-8">
+    <div className="min-h-screen bg-warm-white px-6 py-8">
       <div className="max-w-[640px] mx-auto">
-        <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+        {/* ヘッダー */}
+        <div className="flex items-center gap-4 mb-6">
           <button
             onClick={() => setCurrentScreen('home')}
-            className="text-gray-600 hover:text-gray-800 transition-colors"
+            className="w-12 h-12 flex items-center justify-center rounded-xl bg-white shadow-soft text-text-gray hover:text-heading-gray hover:shadow-lg transition-all"
           >
-            <ArrowLeft size={20} className="sm:w-6 sm:h-6" />
+            <ArrowLeft size={24} />
           </button>
-          <h2 className="text-2xl sm:text-3xl font-light text-gray-800">生成結果</h2>
+          <h2 className="text-2xl font-bold text-heading-gray">生成結果</h2>
         </div>
 
-        {/* タイトル候補 */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-8 mb-4 sm:mb-6">
-          <div className="flex items-center justify-between mb-4 sm:mb-6">
-            <h3 className="text-base sm:text-xl font-medium text-gray-800">タイトル候補</h3>
+        {/* タイトル候補カード */}
+        <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8 mb-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-bold text-heading-gray">タイトル候補</h3>
             <button
               onClick={handleRegenerateTitles}
-              className="flex items-center gap-1 sm:gap-2 text-dusty-rose hover:text-dusty-pink transition-colors text-sm sm:text-base"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-dusty-pink/10 text-rose-beige hover:bg-dusty-pink/20 transition-all"
             >
-              <RefreshCw size={16} className="sm:w-[18px] sm:h-[18px]" />
-              <span className="hidden sm:inline">再生成</span>
-              <span className="sm:hidden">再生成</span>
+              <RefreshCw size={18} />
+              <span className="text-sm font-medium">再生成</span>
             </button>
           </div>
 
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-3">
             {generatedContent.titles.map((title, index) => (
-              <div key={index} className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-beige-50 rounded-lg sm:rounded-xl">
-                <span className="flex-1 text-sm sm:text-base text-gray-800">{title}</span>
-                <button
-                  onClick={() => handleCopy(title, `title-${index}`)}
-                  className="flex items-center gap-1 sm:gap-2 px-3 py-2 sm:px-4 bg-white rounded-lg text-xs sm:text-sm text-gray-700 hover:bg-beige-100 transition-colors whitespace-nowrap"
-                >
-                  <Copy size={14} className="sm:w-4 sm:h-4" />
-                  {copySuccess === `title-${index}` ? 'コピー済み!' : 'コピー'}
-                </button>
+              <div key={index} className="group">
+                <div className="flex items-start gap-3 p-4 bg-warm-white rounded-xl border-2 border-gray-100 hover:border-dusty-pink transition-all">
+                  <span className="flex-1 text-text-gray leading-relaxed">{title}</span>
+                  <button
+                    onClick={() => handleCopy(title, `title-${index}`)}
+                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg bg-white border-2 border-gray-200 text-text-gray hover:border-dusty-pink hover:text-rose-beige transition-all"
+                  >
+                    <Copy size={16} />
+                    <span className="text-sm font-medium">
+                      {copySuccess === `title-${index}` ? '✓' : 'コピー'}
+                    </span>
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* 説明文 */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-8">
-          <div className="flex items-center justify-between mb-4 sm:mb-6">
+        {/* 説明文カード */}
+        <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8 mb-6">
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-base sm:text-xl font-medium text-gray-800">説明文</h3>
-              <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                現在の文字数: {generatedContent.description.length}文字
+              <h3 className="text-lg font-bold text-heading-gray">説明文</h3>
+              <p className="text-sm text-text-gray/60 mt-1">
+                {generatedContent.description.length}文字
               </p>
             </div>
             <button
               onClick={handleRegenerateDescription}
-              className="flex items-center gap-1 sm:gap-2 text-dusty-rose hover:text-dusty-pink transition-colors text-sm sm:text-base"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-dusty-pink/10 text-rose-beige hover:bg-dusty-pink/20 transition-all"
             >
-              <RefreshCw size={16} className="sm:w-[18px] sm:h-[18px]" />
-              <span className="hidden sm:inline">再生成</span>
-              <span className="sm:hidden">再生成</span>
+              <RefreshCw size={18} />
+              <span className="text-sm font-medium">再生成</span>
             </button>
           </div>
 
-          <div className="bg-beige-50 rounded-lg sm:rounded-xl p-4 sm:p-6 mb-3 sm:mb-4">
-            <pre className="whitespace-pre-wrap font-sans text-xs sm:text-sm text-gray-800 leading-relaxed">
+          <div className="bg-warm-white rounded-xl p-6 mb-6 border-2 border-gray-100">
+            <pre className="whitespace-pre-wrap font-sans text-sm text-text-gray leading-relaxed">
               {generatedContent.description}
             </pre>
           </div>
 
-          <button
-            onClick={() => handleCopy(generatedContent.description, 'description')}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-dusty-pink to-dusty-rose text-white rounded-lg sm:rounded-xl hover:shadow-lg transition-all text-sm sm:text-base"
-          >
-            <Copy size={16} className="sm:w-[18px] sm:h-[18px]" />
-            {copySuccess === 'description' ? 'コピー済み!' : '全文コピー'}
-          </button>
-        </div>
-
-        <div className="mt-4 sm:mt-6 text-center">
           <Button
-            onClick={() => setCurrentScreen('input')}
-            variant="secondary"
-            className="inline-flex"
+            onClick={() => handleCopy(generatedContent.description, 'description')}
+            className="bg-rose-beige hover:bg-rose-beige-hover"
           >
-            入力画面に戻る
+            <Copy size={24} />
+            <span>{copySuccess === 'description' ? 'コピーしました！' : '全文コピー'}</span>
           </Button>
         </div>
+
+        {/* 戻るボタン */}
+        <Button
+          onClick={() => setCurrentScreen('input')}
+          variant="secondary"
+        >
+          <ArrowLeft size={24} />
+          <span>入力画面に戻る</span>
+        </Button>
       </div>
     </div>
   )

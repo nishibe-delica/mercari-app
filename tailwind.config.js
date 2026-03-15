@@ -7,22 +7,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        beige: {
-          50: '#faf8f5',
-          100: '#f5f1eb',
-          200: '#ebe3d7',
-          300: '#dfd2bf',
-          400: '#d1bda3',
-          500: '#c5aa8a',
-        },
-        dusty: {
-          pink: '#e8c4c4',
-          rose: '#d4a5a5',
-        }
+        'warm-white': '#FDF8F5',
+        'dusty-pink': '#E8B4B8',
+        'rose-beige': '#D4A5A5',
+        'rose-beige-hover': '#C49494',
+        'text-gray': '#5D5D5D',
+        'heading-gray': '#4A4A4A',
       },
       fontFamily: {
-        sans: ['Hiragino Maru Gothic ProN', 'メイリオ', 'Meiryo', 'sans-serif'],
-      }
+        sans: ['Rounded Mplus 1c', 'Hiragino Maru Gothic ProN', 'メイリオ', 'Meiryo', 'sans-serif'],
+      },
+      boxShadow: {
+        'soft': '0 4px 12px rgba(0, 0, 0, 0.1)',
+      },
     },
   },
   plugins: [],

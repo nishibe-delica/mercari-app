@@ -7,12 +7,12 @@ interface ButtonProps {
 }
 
 export default function Button({ children, onClick, variant = 'primary', className = '', type = 'button' }: ButtonProps) {
-  const baseClasses = 'px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl font-medium transition-all duration-200 shadow-md hover:shadow-lg text-sm sm:text-base'
+  const baseClasses = 'w-full min-h-[56px] rounded-xl font-medium transition-all duration-200 shadow-soft hover:shadow-lg flex items-center justify-center gap-3 text-base'
 
   const variantClasses = {
-    primary: 'bg-gradient-to-r from-dusty-pink to-dusty-rose text-white hover:from-dusty-rose hover:to-dusty-pink',
-    secondary: 'bg-beige-100 text-gray-700 hover:bg-beige-200',
-    outline: 'border-2 border-dusty-pink text-dusty-rose hover:bg-dusty-pink hover:text-white',
+    primary: 'bg-rose-beige text-white hover:bg-rose-beige-hover',
+    secondary: 'bg-white text-text-gray border-2 border-gray-200 hover:border-dusty-pink',
+    outline: 'border-2 border-dusty-pink text-rose-beige hover:bg-dusty-pink hover:text-white',
   }
 
   return (

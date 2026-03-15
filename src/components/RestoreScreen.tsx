@@ -10,7 +10,6 @@ export default function RestoreScreen() {
 
   const handleRestore = () => {
     try {
-      // 簡易的なパース処理
       const lines = pastedText.split('\n')
       const data: any = {}
 
@@ -49,47 +48,58 @@ export default function RestoreScreen() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-beige-50 via-white to-dusty-pink/10 px-4 py-6 sm:p-8">
+    <div className="min-h-screen bg-warm-white px-6 py-8">
       <div className="max-w-[640px] mx-auto">
-        <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+        {/* ヘッダー */}
+        <div className="flex items-center gap-4 mb-6">
           <button
             onClick={() => setCurrentScreen('home')}
-            className="text-gray-600 hover:text-gray-800 transition-colors"
+            className="w-12 h-12 flex items-center justify-center rounded-xl bg-white shadow-soft text-text-gray hover:text-heading-gray hover:shadow-lg transition-all"
           >
-            <ArrowLeft size={20} className="sm:w-6 sm:h-6" />
+            <ArrowLeft size={24} />
           </button>
-          <h2 className="text-2xl sm:text-3xl font-light text-gray-800">既存から復元</h2>
+          <h2 className="text-2xl font-bold text-heading-gray">既存から復元</h2>
         </div>
 
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-8">
-          <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
-            Googleドキュメントなどからコピーした内容を貼り付けてください。
-            <br />
-            <span className="text-xs sm:text-sm text-gray-500">
+        {/* 説明カード */}
+        <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8 mb-6">
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-heading-gray mb-3">使い方</h3>
+            <p className="text-text-gray leading-relaxed mb-2">
+              Googleドキュメントなどからコピーした内容を貼り付けてください。
+            </p>
+            <p className="text-sm text-text-gray/60">
               ※「商品番号:」「カテゴリ:」「商品種類:」「カラー:」などの形式で記載されている必要があります
-            </span>
-          </p>
+            </p>
+          </div>
 
           <textarea
             value={pastedText}
             onChange={(e) => setPastedText(e.target.value)}
-            className="w-full h-64 sm:h-96 px-3 py-2 sm:px-4 sm:py-3 border border-beige-300 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink resize-none font-mono text-xs sm:text-sm"
-            placeholder="ここにGoogleドキュメントの内容を貼り付けてください&#10;&#10;例:&#10;商品番号: A12345&#10;カテゴリ: レディース&#10;商品種類: ワンピース&#10;カラー: ベージュ&#10;特徴: フリル付き&#10;ターゲット: 20代女性"
+            className="w-full h-96 px-4 py-4 text-base border-2 border-gray-200 rounded-xl focus:outline-none focus:border-dusty-pink focus:ring-2 focus:ring-dusty-pink/20 transition-all bg-warm-white resize-none font-mono text-sm text-text-gray"
+            placeholder="ここにGoogleドキュメントの内容を貼り付けてください
+
+例:
+商品番号: A12345
+カテゴリ: レディース
+商品種類: ワンピース
+カラー: ベージュ
+特徴: フリル付き
+ターゲット: 20代女性"
           />
 
           {error && (
-            <div className="mt-3 sm:mt-4 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg sm:rounded-xl text-xs sm:text-sm text-red-600">
-              {error}
+            <div className="mt-4 p-4 bg-red-50 border-2 border-red-200 rounded-xl">
+              <p className="text-sm text-red-600 font-medium">{error}</p>
             </div>
           )}
 
-          <Button
-            onClick={handleRestore}
-            className="w-full mt-6 flex items-center justify-center gap-2"
-          >
-            <FileSearch size={20} />
-            内容を読み取る
-          </Button>
+          <div className="mt-6">
+            <Button onClick={handleRestore}>
+              <FileSearch size={24} />
+              <span>内容を読み取る</span>
+            </Button>
+          </div>
         </div>
       </div>
     </div>

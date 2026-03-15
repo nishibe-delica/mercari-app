@@ -6,41 +6,52 @@ export default function HomeScreen() {
   const setCurrentScreen = useMercariStore((state) => state.setCurrentScreen)
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 sm:px-6 md:px-8 bg-gradient-to-br from-beige-50 via-white to-dusty-pink/10">
-      <div className="text-center space-y-8 sm:space-y-12 w-full max-w-[640px]">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-gray-800 mb-2 sm:mb-4">
-          ✿ メルカリ出品AIツール
-        </h1>
-        <p className="text-gray-600 text-base sm:text-lg font-light px-4">
-          商品情報を入力するだけで、魅力的なタイトルと説明文を自動生成
-        </p>
+    <div className="min-h-screen bg-warm-white flex items-center justify-center px-6 py-12">
+      <div className="w-full max-w-[640px]">
+        {/* ヘッダー */}
+        <div className="text-center mb-12">
+          <div className="text-5xl mb-4">✿</div>
+          <h1 className="text-3xl md:text-4xl font-bold text-heading-gray mb-4">
+            メルカリ出品AIツール
+          </h1>
+          <p className="text-text-gray text-base leading-relaxed">
+            商品情報を入力するだけで<br className="md:hidden" />
+            魅力的なタイトルと説明文を自動生成
+          </p>
+        </div>
 
-        <div className="space-y-3 sm:space-y-4 mt-8 sm:mt-16 px-4">
+        {/* メインカード */}
+        <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8 space-y-4">
           <Button
             onClick={() => setCurrentScreen('input')}
-            className="w-full max-w-md flex items-center justify-center gap-3"
+            className="bg-rose-beige hover:bg-rose-beige-hover"
           >
-            <Plus size={20} />
-            新規作成
+            <Plus size={24} />
+            <span>新規作成</span>
           </Button>
 
           <Button
             onClick={() => setCurrentScreen('restore')}
             variant="secondary"
-            className="w-full max-w-md flex items-center justify-center gap-3"
           >
-            <FileText size={20} />
-            既存から復元
+            <FileText size={24} />
+            <span>既存から復元</span>
           </Button>
 
           <Button
             onClick={() => setCurrentScreen('settings')}
             variant="outline"
-            className="w-full max-w-md flex items-center justify-center gap-3"
           >
-            <Settings size={20} />
-            設定
+            <Settings size={24} />
+            <span>設定</span>
           </Button>
+        </div>
+
+        {/* フッター */}
+        <div className="text-center mt-8">
+          <p className="text-sm text-text-gray/60">
+            タップしやすい、使いやすい、心地よい
+          </p>
         </div>
       </div>
     </div>
